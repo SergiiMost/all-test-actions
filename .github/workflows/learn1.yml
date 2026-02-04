@@ -1,4 +1,4 @@
-name: Script Transfer Demo
+name: learn1
 
 on: workflow_dispatch
 
