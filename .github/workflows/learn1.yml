@@ -1,0 +1,38 @@
+name: Script Transfer Demo
+
+on: workflow_dispatch
+
+jobs:
+  # JOB 1: The "Developer" (Creates the tool)
+  create_script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate a custom Bash script
+        run: |
+          mkdir tools
+          echo "#!/bin/bash" > tools/hello.sh
+          echo "echo 'Hello! I was created on Runner A and I am now running on Runner B!'" >> tools/hello.sh
+          # We make it executable here, but some upload processes might strip permissions
+          chmod +x tools/hello.sh
+
+      - name: Upload the script to the Locker
+        uses: actions/upload-artifact@v4
+        with:
+          name: my-custom-script
+          path: tools/
+
+  # JOB 2: The "User" (Runs the tool)
+  run_script:
+    needs: create_script
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download the script from the Locker
+        uses: actions/download-artifact@v4
+        with:
+          name: my-custom-script
+
+      - name: Execute the script
+        run: |
+          # Ensure it has execute permissions on this new VM
+          chmod +x hello.sh
+          ./hello.sh
