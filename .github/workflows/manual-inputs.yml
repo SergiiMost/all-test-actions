@@ -24,6 +24,6 @@ jobs:
     steps:
       - name: Print inputs
         run: |
-          echo "${{github.event.inputs}}"
+          echo "${{toJson(github.event.inputs)}}"
           echo "Name: ${{ github.event.inputs.name }}"
           echo "Environment: ${{ github.event.inputs.environment }}"
