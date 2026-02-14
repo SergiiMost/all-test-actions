@@ -1,0 +1,43 @@
+name: Manual Dispatch Example
+
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'Your name'
+        required: true
+        type: string
+      environment:
+        description: 'Target environment'
+        required: true
+        type: choice
+        options:
+          - development
+          - staging
+          - production
+        default: development
+
+env:
+  NAME: ${{ github.event.inputs.name }}
+  ENVIRONMENT: ${{ github.event.inputs.environment }}
+
+jobs:
+  print-inputs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print inputs
+        run: |
+          echo "Name: ${{ env.NAME }}"
+          echo "Environment: ${{ env.ENVIRONMENT }}"
+
+  production-job:
+    runs-on: ubuntu-latest
+    needs: print-inputs
+    steps:
+      - name: Run production steps
+        if: env.ENVIRONMENT == 'production'
+        run: echo "Running in PRODUCTION for ${{ env.NAME }}"
+
+      - name: Not production
+        if: env.ENVIRONMENT != 'production'
+        run: echo "Environment is '${{ env.ENVIRONMENT }}' - not production, skipping."
