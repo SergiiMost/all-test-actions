@@ -1,0 +1,20 @@
+on: workflow_dispatch
+
+jobs:
+  display_variables:
+    name: ${{vars.JOB_NAME}}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use Variables
+        run: |
+          echo "Something One: $SOMETHING_ONE"
+          echo "Something Two: $SOMETHING_TWO"
+        env:
+          SOMETHING_ONE: ${{ vars.SOMETHING_ONE }}
+          SOMETHING_TWO: ${{ vars.SOMETHING_TWO }}
+
+      - name: ${{ vars.HELLO_WORLD_STEP }}
+        if: ${{ vars.HELLO_WORLD_ENABLED == 'true' }}
+        uses: actions/hello-world-javascript-action@main
+        with:
+          who-to-greet: ${{ vars.GREET_NAME }}
