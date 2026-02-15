@@ -15,7 +15,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE: ${{ github.event.issue.html_url }}
   log:
-    runs-on: ubuntu-latests
+    runs-on: ubuntu-latest
     steps:
       - name: Log event
         run: echo " '${{toJson(github.event)}}'"
