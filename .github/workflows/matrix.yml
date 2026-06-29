@@ -1,4 +1,5 @@
 name: Shared Matrix
+
 on: workflow_dispatch
 
 jobs:
@@ -6,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      color-list: ${{ steps.generate-colors.outputs.colors }}
+      color-list: ${{ steps.generate-colors.outputs.color-json }}
 
     steps:
       - name: Define Colors
@@ -17,6 +18,7 @@ jobs:
   produce-artifacts:
     runs-on: ubuntu-latest
     needs: define-matrix
+
     strategy:
       matrix:
         color: ${{ fromJSON(needs.define-matrix.outputs.color-list) }}
@@ -27,6 +29,7 @@ jobs:
           color: ${{ matrix.color }}
         run: |
           echo "$color" > color
+
       - name: Produce Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -35,19 +38,21 @@ jobs:
 
   consume-artifacts:
     runs-on: ubuntu-latest
+
     needs:
-    - define-matrix
-    - produce-artifacts
+      - define-matrix
+      - produce-artifacts
+
     strategy:
       matrix:
         color: ${{ fromJSON(needs.define-matrix.outputs.color-list) }}
 
     steps:
-    - name: Retrieve Artifact
-      uses: actions/download-artifact@v5
-      with:
-        name: ${{ matrix.color }}
+      - name: Retrieve Artifact
+        uses: actions/download-artifact@v5
+        with:
+          name: ${{ matrix.color }}
 
-    - name: Report Color
-      run: |
-        cat color
+      - name: Report Color
+        run: |
+          cat color
