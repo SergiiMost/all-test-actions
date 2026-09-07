@@ -46,10 +46,16 @@ jobs:
         run: |
           cd ..
           cd ..
+          echo "PWD:"
           pwd
+          echo "------"
+          echo "ls -a: "
           ls -a
+          echo "-----"
           sudo apt-get install -y tree   # ubuntu runners have apt
+          echo "Tree"
           tree -L 3
+          echo "-----"
 
   consume-artifacts:
     runs-on: ubuntu-latest
