@@ -55,7 +55,7 @@ jobs:
           echo "-----"
           sudo apt-get install -y tree   # ubuntu runners have apt
           echo "Tree"
-          tree -L 3
+          tree -L 5
           echo "-----"
 
   consume-artifacts:
