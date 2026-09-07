@@ -36,6 +36,17 @@ jobs:
           name: ${{ matrix.color }}
           path: color
 
+      - name: Debug environment
+        run: |
+          echo "Workspace: $GITHUB_WORKSPACE"
+          echo "Runner temp: $RUNNER_TEMP"
+          echo "Runner tool cache: $RUNNER_TOOL_CACHE"
+
+      - name: Show tree
+        run: |
+          sudo apt-get install -y tree   # ubuntu runners have apt
+          tree -L 3
+
   consume-artifacts:
     runs-on: ubuntu-latest
 
