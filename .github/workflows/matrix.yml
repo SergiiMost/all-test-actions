@@ -44,6 +44,8 @@ jobs:
 
       - name: Show tree
         run: |
+          pwd
+          ls -a
           sudo apt-get install -y tree   # ubuntu runners have apt
           tree -L 3
 
