@@ -44,6 +44,7 @@ jobs:
 
       - name: Show tree
         run: |
+          cd .. 
           cd ..
           cd ..
           echo "PWD:"
