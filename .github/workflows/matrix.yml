@@ -9,6 +9,11 @@ jobs:
     outputs:
       color-list: ${{ steps.generate-colors.outputs.color-json }}
 
+    #This step is not really needed  since we could have above:
+    #outputs:
+    #   color-list:'["red", "green", "blue"]'
+    # This is just to show how outputs for example can be dynamically generated
+    # and passed out of the job.
     steps:
       - name: Define Colors
         id: generate-colors
@@ -50,7 +55,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.color }}
-          path: color
+          path: ./color
 
       - name: Debug environment
         run: |
@@ -93,4 +98,4 @@ jobs:
 
       - name: Report Color
         run: |
-          cat color
+          cat ./color
