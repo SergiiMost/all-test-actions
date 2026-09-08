@@ -24,11 +24,22 @@ jobs:
         color: ${{ fromJSON(needs.define-matrix.outputs.color-list) }}
 
     steps:
+      - name: Before Define Color
+        run: |
+          pwd
+          echo "-----"
+          ls -a
       - name: Define Color
         env:
           color: ${{ matrix.color }}
         run: |
           echo "$color" > color
+
+      - name: After Define Color
+        run: |
+          pwd
+          echo "----"
+          ls -a
 
       - name: Produce Artifact
         uses: actions/upload-artifact@v4
