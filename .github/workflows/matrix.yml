@@ -15,6 +15,7 @@ jobs:
         run: |
           echo 'color-json=["red", "green", "blue"]' >> "$GITHUB_OUTPUT"
           echo "GITHUB_OUTPUT: $GITHUB_OUTPUT"
+          cat "$GITHUB_OUTPUT"
 
   produce-artifacts:
     runs-on: ubuntu-latest
