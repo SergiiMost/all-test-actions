@@ -5,10 +5,10 @@ on:
     # Map the workflow outputs to job outputs
     outputs:
       firstword:
-        description: 'The first output string'
+        description: "The first output string"
         value: ${{ jobs.example_job.outputs.output1 }}
       secondword:
-        description: 'The second output string'
+        description: "The second output string"
         value: ${{ jobs.example_job.outputs.output2 }}
 
 jobs:
@@ -24,3 +24,18 @@ jobs:
         run: echo "firstword=hello" >> $GITHUB_OUTPUT
       - id: step2
         run: echo "secondword=world" >> $GITHUB_OUTPUT
+
+  upload_job:
+    name: Upload job
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Create artifact
+        run: |
+          echo "123" > numbers.txt
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v5
+        with:
+          name: numbers
+          path: ./numbers.txt
