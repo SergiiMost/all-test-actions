@@ -34,6 +34,9 @@ jobs:
           color: ${{ matrix.color }}
         run: |
           echo "$color" > color
+          echo "Color file contains: "
+          cat color
+          echo "----"
 
       - name: After Define Color
         run: |
